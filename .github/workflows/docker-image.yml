@@ -1,0 +1,53 @@
+name: Build and Push Docker Image to Amazon ECR
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Check out code
+    - uses: actions/checkout@v3
+    
+    - name: Login to ECR
+      id: login_to_ecr
+      uses: jwalton/gh-ecr-login@v2.0.0
+      with: 
+        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        region: us-east-1
+        
+   
+    - name: Build the Docker image
+      env:
+        ECR_REGISTRY: ${{ steps.login_to_ecr.outputs.registry }}
+        ECR_REPOSITORY: demo-repo
+        IMAGE_TAG: v1.0
+        IMAGE_TAG1: v1.1
+        IMAGE_TAG2: v1.2
+        
+      run: |
+        cd clo835_fall2022_assignment1/app.py
+        ls -ltra
+        docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG2
+        docker run -d -p 8081:8080 -e APP_COLOR=blue $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker run -d -p 8082:8080 -e APP_COLOR=pink $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker run -d -p 8083:8080 -e APP_COLOR=lime $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG2
+        docker ps
+        echo "Pause for 20 seconds"
+        sleep 20
+        curl localhost -vvv
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG2
