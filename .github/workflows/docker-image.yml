@@ -34,7 +34,7 @@ jobs:
         IMAGE_TAG1: v0.2
         
       run: |
-        ls -ltra
+        
         # Docker build 
         docker build . --file Dockerfile -t application
         docker build . --file Dockerfile_mysql - t mysql
@@ -45,7 +45,7 @@ jobs:
         
         # Unit test
         docker run -d -p 80:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker run -d -p 80:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker run -d -p 80:8080 --name mysql $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
         
         docker ps
         echo "Pause for 10 seconds to let container start"
