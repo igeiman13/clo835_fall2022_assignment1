@@ -31,15 +31,26 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: clo835-repo
         IMAGE_TAG: v0.1
+        IMAGE_TAG1: v0.2
+        
       run: |
         ls -ltra
-        # Docker build
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
+        # Docker build 
+        docker build . --file Dockerfile -t application
+        docker build . --file Dockerfile_mysql - t mysql
+        
+        # Docker tag 
+        docker tag -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker tag -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
         
         # Unit test
         docker run -d -p 80:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker run -d -p 80:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        
         docker ps
         echo "Pause for 10 seconds to let container start"
         sleep 10
         #curl localhost -vvv
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        
