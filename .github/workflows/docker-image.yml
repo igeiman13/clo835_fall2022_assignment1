@@ -36,8 +36,8 @@ jobs:
       run: |
         
         # Docker build 
-        docker build . --file Dockerfile -t application
-        docker build . --file Dockerfile_mysql - t mysql
+        docker build -t my_app -f Dockerfile .
+        docker build -t my_db -f Dockerfile_mysql .
         
         # Docker tag 
         docker tag application $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
