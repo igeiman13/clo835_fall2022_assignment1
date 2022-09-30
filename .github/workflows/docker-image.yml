@@ -40,12 +40,12 @@ jobs:
         docker build -t my_db -f Dockerfile_mysql .
         
         # Docker tag 
-        docker tag application $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker tag mysql $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker tag my_app $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker tag my_db $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
         
         # Unit test
-        docker run -d -p 80:8080 --name application $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker run -d -p 80:8080 --name mysql $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker run -d -p 80:8080 --name my_app $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker run -d -p 80:8080 --name my_db $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
         
         docker ps
         echo "Pause for 10 seconds to let container start"
