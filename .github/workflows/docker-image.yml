@@ -40,8 +40,8 @@ jobs:
         docker build . --file Dockerfile_mysql - t mysql
         
         # Docker tag 
-        docker tag -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker tag -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker tag application $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker tag mysql $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
         
         # Unit test
         docker run -d -p 80:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
