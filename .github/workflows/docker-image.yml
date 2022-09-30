@@ -30,13 +30,13 @@ jobs:
     - name: Build the Docker image
       env:
         ECR_REGISTRY: ${{ steps.login_to_ecr.outputs.registry }}
-        ECR_REPOSITORY: demo-repo
+        ECR_REPOSITORY: clo835-repo
         IMAGE_TAG: v1.0
         IMAGE_TAG1: v1.1
         IMAGE_TAG2: v1.2
         
       run: |
-        cd clo835_fall2022_assignment1/app.py
+        cd clo835_fall2022_assignment1
         ls -ltra
         docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
