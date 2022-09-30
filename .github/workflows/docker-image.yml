@@ -45,7 +45,7 @@ jobs:
         
         # Unit test
         docker run -d -p 80:8080 --name my_app $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker run -d -p 80:8080 --name my_db $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
+        docker run -d -p 88:8080 --name my_db $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
         
         docker ps
         echo "Pause for 10 seconds to let container start"
