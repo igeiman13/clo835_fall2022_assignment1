@@ -14,7 +14,7 @@ sudo python3 app.py
 ```docker build -t my_app -f Dockerfile . ```
 
 ### Running mysql
-```docker run -e MYSQL_ROOT_PASSWORD=pw  my_db```
+```docker run -d -e MYSQL_ROOT_PASSWORD=pw  my_db```
 
 
 ### Get the IP of the database and export it as DBHOST variable
