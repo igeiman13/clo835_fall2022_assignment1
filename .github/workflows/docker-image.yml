@@ -30,8 +30,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: clo835-repo
-        IMAGE_TAG: v0.1
-        IMAGE_TAG1: v0.2
+        IMAGE_TAG: app
+        IMAGE_TAG1: db
         
       run: |
         
@@ -50,7 +50,8 @@ jobs:
         docker ps
         echo "Pause for 10 seconds to let container start"
         sleep 10
-        #curl localhost -vvv
+        
+        # Docker push
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG1
         
