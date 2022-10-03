@@ -37,6 +37,7 @@ jobs:
         docker build -t my_db -f Dockerfile_mysql .
         docker build -t my_app -f Dockerfile .
         docker run -d -e MYSQL_ROOT_PASSWORD=pw my_db
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker ps
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
