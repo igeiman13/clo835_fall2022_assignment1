@@ -34,9 +34,9 @@ jobs:
       run: |
         ls -ltra
         # Docker build
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # Unit test
-        docker run -d -p 8080:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build -t my_db -f Dockerfile_mysql .
+        docker build -t my_app -f Dockerfile .
+        docker run -d -e MYSQL_ROOT_PASSWORD=pw my_db
         docker ps
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
