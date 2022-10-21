@@ -34,7 +34,7 @@ jobs:
       run: |
         ls -ltra
         # Docker build
-        docker build -t $IMAGE_TAG --file Dockerfile
+        docker build -file Dockerfile
         docker ps
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
@@ -46,7 +46,7 @@ jobs:
       run: |
         ls -ltra
         # Docker build
-        docker build -t $IMAGE_TAG --file Dockerfile_mysql 
+        docker build -file Dockerfile_mysql 
         docker ps
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
