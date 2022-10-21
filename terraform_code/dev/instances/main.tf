@@ -49,6 +49,8 @@ module "globalvars" {
 resource "aws_instance" "my_amazon" {
   ami                         = data.aws_ami.latest_amazon_linux.id
   instance_type               = lookup(var.instance_type, var.env)
+  # Attaching IAM profile to ec2 instance
+  iam_instance_profile        = aws_iam_instance_profile.my_profile.name
   key_name                    = aws_key_pair.my_key.key_name
   vpc_security_group_ids             = [aws_security_group.my_sg.id]
   associate_public_ip_address = false
@@ -85,7 +87,31 @@ resource "aws_security_group" "my_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-
+ # Opening ports for application to access 
+  ingress {
+    description      = "Port For application"
+    from_port        = 8081
+    to_port          = 8081
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  
+    ingress {
+    description      = "Port For application"
+    from_port        = 8082
+    to_port          = 8082
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  
+    ingress {
+    description      = "Port For application"
+    from_port        = 8083
+    to_port          = 8083
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  
   egress {
     from_port        = 0
     to_port          = 0
@@ -101,6 +127,59 @@ resource "aws_security_group" "my_sg" {
   )
 }
 
+# Creating IAM role
+  resource "aws_iam_role" "test_role" {
+  name = "test_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2022-10-20",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+
+tags = merge(local.default_tags,
+    {
+      "Name" = "${local.name_prefix}-role"
+    }
+}
+    
+# Creating IAM profile ec2 user
+  resource "aws_iam_instance_profile" "my_profile" {
+  name = "my_profile"
+  role = "${aws_iam_role.test_role.name}"
+}
+
+# Creating policy for ec2 user
+  resource "aws_iam_role_policy" "ecr_policy" {
+  name = "ecr_policy"
+  role = "${aws_iam_role.test_role.id}"
+
+  policy = <<EOF
+{
+  "Version": "2022-10-20",
+  "Statement": [
+    {
+      "Action": [
+        "ecr:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+    
 # Elastic IP
 resource "aws_eip" "static_eip" {
   instance = aws_instance.my_amazon.id
@@ -110,17 +189,9 @@ resource "aws_eip" "static_eip" {
     }
   )
 }
-  
+  # Creating ecr repositories
   resource "aws_ecr_repository" "foo" {
-  name                 = "web_app"
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-}
-    resource "aws_ecr_repository" "foo" {
-  name                 = "my_sql"
+  name                 = ["web_app", "my_sql"]
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
