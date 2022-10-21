@@ -35,7 +35,7 @@ jobs:
         # Docker build
         docker build --file Dockerfile .
         docker ps
-        aws ecr get-login password --region us-east-1 | docker login -u AWS $(ECR_REGISTRY) --password-stdin
+        aws ecr get-login password --region us-east-1 | docker login -u AWS $ECR_REGISTRY --password-stdin
         docker tag $IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG && docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
     - name: Build, test, tag, and push image to Amazon ECR
@@ -48,6 +48,6 @@ jobs:
         # Docker build
         docker build --file Dockerfile_mysql .
         docker ps
-        aws ecr get-login password --region us-east-1 | docker login -u AWS $(ECR_REGISTRY) --password-stdin
+        aws ecr get-login password --region us-east-1 | docker login -u AWS $ECR_REGISTRY --password-stdin
         docker tag $IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG && docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
