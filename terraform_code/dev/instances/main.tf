@@ -63,9 +63,7 @@ resource "aws_instance" "my_amazon" {
     {
       "Name" = "${local.name_prefix}-Amazon-Linux"
     }
-  )
-}
- 
+  ) 
   user_data = <<-EOF
     #!/bin/bash
     set -ex
@@ -81,7 +79,8 @@ resource "aws_instance" "my_amazon" {
     rm -f ./kubectl
     kind create cluster --config kind.yaml​
   EOF
-
+}
+  
 # Adding SSH key to Amazon EC2
 resource "aws_key_pair" "my_key" {
   key_name   = local.name_prefix
