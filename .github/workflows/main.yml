@@ -25,7 +25,6 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         AWS_REGION: us-east-1
-
     - name: Build, test, tag, and push image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -36,6 +35,7 @@ jobs:
         # Docker build
         docker build --file Dockerfile .
         docker ps
+        docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) $ECR_REGISTRY
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
     - name: Build, test, tag, and push image to Amazon ECR
@@ -48,5 +48,6 @@ jobs:
         # Docker build
         docker build --file Dockerfile_mysql .
         docker ps
+        docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) $ECR_REGISTRY
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
