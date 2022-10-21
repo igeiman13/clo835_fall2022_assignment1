@@ -165,6 +165,7 @@ tags = merge(local.default_tags,
     {
       "Name" = "${local.name_prefix}-role"
     }
+  )
 }
     
 # Creating IAM profile ec2 user
@@ -204,7 +205,7 @@ resource "aws_eip" "static_eip" {
   )
 }
   # Creating ecr repositories
- resource "aws_ecr_repository" "foo" {
+ resource "aws_ecr_repository" "app" {
   name                 = "web_app"
   image_tag_mutability = "MUTABLE"
 
@@ -213,7 +214,7 @@ resource "aws_eip" "static_eip" {
   }
 }
     
- resource "aws_ecr_repository" "foo" {
+ resource "aws_ecr_repository" "sql" {
   name                 = "my_sql"
   image_tag_mutability = "MUTABLE"
 
