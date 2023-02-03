@@ -1,0 +1,38 @@
+name: build images and push to ECR
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  AWS_REGION: us-east-1
+      
+jobs:
+  build:
+    name: build and deploy image to AWS ECR
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Login to AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          
+          
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ env.AWS_REGION }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/app:latest -f Dockerfile
+  
+      - name: Push Docker image
+        run: |
+          docker push ${{ env.AWS_REGION }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/app:latest
+          echo "push the app image to ECR"
