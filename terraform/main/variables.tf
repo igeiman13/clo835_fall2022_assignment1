@@ -1,8 +1,8 @@
 # ASG Instance Type
 variable "type" {
-  default     = {
+  default = {
     "dev" = "t2.micro"
-}
+  }
   type        = map(string)
   description = "Dev Environment Instances Type"
 }
