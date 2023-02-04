@@ -7,9 +7,11 @@ on:
     paths:
       - Dockerfile_mysql
       - mysql.sql
+      - .github/workflows/build-mysql-image.yaml
 
 env:
   AWS_REGION: us-east-1
+  MYSQL_TAG: 1.0
       
 jobs:
   build:
@@ -34,9 +36,9 @@ jobs:
         
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/mysql:latest -f Dockerfile_mysql .
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/mysql:${{ env.MYSQL_TAG }} -f Dockerfile_mysql .
   
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/mysql:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/mysql:${{ env.MYSQL_TAG }}
           echo "push the mysql image to ECR"
