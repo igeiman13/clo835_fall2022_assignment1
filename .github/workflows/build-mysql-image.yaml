@@ -1,0 +1,42 @@
+name: build images and push to ECR
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - Dockerfile_mysql
+      - mysql.sql
+
+env:
+  AWS_REGION: us-east-1
+      
+jobs:
+  build:
+    name: build and deploy image to AWS ECR
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Login to AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          aws-session-token:  ${{ secrets.AWS_SESSION_TOKEN }}
+          
+          
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/mysql:latest -f Dockerfile_mysql .
+  
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/mysql:latest
+          echo "push the mysql image to ECR"
