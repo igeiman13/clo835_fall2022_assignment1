@@ -31,9 +31,9 @@ jobs:
         
       - name: Build Docker image
         run: |
-          docker build -t ${{ env.AWS_REGION }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/app:latest -f Dockerfile .
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/app:latest -f Dockerfile .
   
       - name: Push Docker image
         run: |
-          docker push ${{ env.AWS_REGION }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/app:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/app:latest
           echo "push the app image to ECR"
