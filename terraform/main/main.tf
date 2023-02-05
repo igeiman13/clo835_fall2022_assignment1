@@ -87,8 +87,30 @@ resource "aws_security_group" "sg_web" {
 
   ingress {
     description = "HTTP from everywhere"
-    from_port   = 80
-    to_port     = 80
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    #security_groups  = [aws_security_group.sg_web.id]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  
+  
+   ingress {
+    description = "HTTP from everywhere"
+    from_port   = 8082
+    to_port     = 8082
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    #security_groups  = [aws_security_group.sg_web.id]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  
+  
+   ingress {
+    description = "HTTP from everywhere"
+    from_port   = 8083
+    to_port     = 8083
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     #security_groups  = [aws_security_group.sg_web.id]
