@@ -15,12 +15,15 @@ install docker and add ec2user to docker group
 - newgrp docker
 
 
-add aws credentials (better to create iam role and attach it to the machine using terraform)
+add aws credentials 
 - mkdir .aws
 - vi ~/.aws/credentials and add the credentials
 
+#Change below repository to yours
+- aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin xxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com
+
 docker login to ecr and pull the images
-- 
+
 - docker pull 837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.0
 - docker pull 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
 
