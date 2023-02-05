@@ -1,0 +1,17 @@
+# Compiled files
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+*.terraform.lock.hcl
+
+# Directories
+**/.terraform/
+
+# Ignored Terraform files - includes 'gitignore' in the name.
+gitignore.tf
+
+# Ignore all files and folders that have 'private' prefix
+*private
+*keys
+*Assignment-dev
+*Assignment-dev.pub
