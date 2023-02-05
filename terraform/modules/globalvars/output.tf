@@ -2,8 +2,8 @@
 # Default tags
 output "default_tags" {
   value = {
-    "App"   = "Two-Tier Web Application"
-    "Onwer" = "Darshil Dobariya, Harsh Jasani, Bishal Bhatta"
+    "App"   = "Webapp"
+    "Onwer" = "Darshil Dobariya"
   }
 }
 
