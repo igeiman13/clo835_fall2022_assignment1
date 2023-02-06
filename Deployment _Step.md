@@ -5,41 +5,56 @@
      /_/   \_\_/\_/  |____/   \____|_|\___/ \__,_|\__,_|  /_/ 
  ----------------------------------------------------------------- 
 
+#Deploy the Terraform Code from Instance (:~/environment/clo835_fall2022_assignment1/terraform_code/dev/instances)
+ - Run the following Commands
+ - Terraform init
+ - Terraform validate
+ - Terraform Plan
+ - Terraform apply --auto-approve
 
-steps after ssh into the machine:
+#SSH int the Machine (Pick the eip Output)
+ - ssh -i Assignment-dev ec2-user@X.X.X.X.X 
 
-install docker and add ec2user to docker group
+
+#steps after ssh into the machine:
+
+#install docker and add ec2user to docker group
 - sudo yum install docker -y
 - sudo systemctl start docker
 - sudo usermod -aG docker $USER
 - newgrp docker
 
 
-add aws credentials 
+#add aws credentials 
 - mkdir .aws
-- vi ~/.aws/credentials and add the credentials
 
-#Change below repository to yours
+#Add the credentials(Access key,Secret Acess Key & Session Token
+- vi ~/.aws/credentials 
+
+# To login-Go to ecr app on console, view push commands (Retrieve an authentication token and authenticate your Docker client to your registry)
 - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin xxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com
 
-docker login to ecr and pull the images
+#docker login to ecr and pull the images (Remember to update Actions secrets and variables on git)
 
-- docker pull 837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.0
+- docker pull 837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.1
 - docker pull 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
 
-run mysql container
-- docker run --network bridge -d --name mysql -e MYSQL_ROOT_PASSWORD=pw   837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.0
+#run mysql container
+- docker run --network bridge -d --name mysql -e MYSQL_ROOT_PASSWORD=pw   837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.1
 
-export env that will be used from the application containers:
+#export env that will be used from the application containers:
 - export DBHOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql)
 - export DBPORT=3306
 - export DBUSER=root
 - export DATABASE=employees
 - export DBPWD=pw
 
-deploy three containers with different colors
-docker run -d --network bridge  -p 8081:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=pink 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
-docker run -d --network bridge  -p 8082:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=blue 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
-docker run -d --network bridge  -p 8083:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=lime 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
+#deploy three containers with different colors
+- docker run -d --network bridge  -p 8081:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=blue 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
+- docker run -d --network bridge  -p 8082:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=pink 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
+- docker run -d --network bridge  -p 8083:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e APP_COLOR=lime 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
 
-then access these applications using the machine ip and ports 8081, 8082, or 8083
+#Then access these applications using the machine ip and ports 8081, 8082, or 8083 
+- X.X.X.X:8081 (For blue)
+- X.X.X.X:8082 (for pink)
+- X.X.X.X:8083 (for Lime)
