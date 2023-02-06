@@ -34,7 +34,7 @@ jobs:
         IMAGE_TAG: akash0.1
       run: |
         # Docker build
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORYDB:$IMAGE_TAG Dockerfile_mysql.
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORYDB:$IMAGE_TAG Dockerfile_mysql
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORYWEB:$IMAGE_TAG .
         sleep 10
         docker push $ECR_REGISTRY/$ECR_REPOSITORYDB:$IMAGE_TAG
