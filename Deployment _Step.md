@@ -34,7 +34,7 @@
 # To login-Go to ecr app on console, view push commands (Retrieve an authentication token and authenticate your Docker client to your registry)
 - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin xxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com
 
-#docker login to ecr and pull the images
+#docker login to ecr and pull the images (Remember to update Actions secrets and variables on git)
 
 - docker pull 837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.1
 - docker pull 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
