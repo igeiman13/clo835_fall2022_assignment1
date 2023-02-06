@@ -30,7 +30,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORYDB: akashdbrepo
-        ECR_REPOSITORYWED: akashwebecrrepo
+        ECR_REPOSITORYWEB: akashwebecrrepo
         IMAGE_TAG: akash0.1
       run: |
         # Docker build
