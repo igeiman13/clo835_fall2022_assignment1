@@ -17,10 +17,6 @@ variable "env" {
   description = "Deployment Environment"
 }
 
-variable "path_to_my_key" {
-  default     = "/home/ec2-user/.ssh/assignment1.pub"
-  description = "Path to the public key to use in instance"
-  type        = string
-}
+
 
 

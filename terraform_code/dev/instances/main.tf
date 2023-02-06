@@ -1,7 +1,7 @@
 
 
 #----------------------------------------------------------
-# CLO835 - Assignment1 - Terraform Introduction
+# ACS730 - Week 3 - Terraform Introduction
 #
 # Build EC2 Instances
 #
@@ -68,9 +68,8 @@ resource "aws_instance" "my_amazon" {
 # Adding SSH key to Amazon EC2
 resource "aws_key_pair" "my_key" {
   key_name   = local.name_prefix
-  public_key = file(var.path_to_my_key)
+  public_key = file("${local.name_prefix}.pub")
 }
-
 
 # Security Group
 resource "aws_security_group" "my_sg" {
