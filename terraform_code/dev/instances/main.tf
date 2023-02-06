@@ -1,7 +1,7 @@
 
 
 #----------------------------------------------------------
-# ACS730 - Week 3 - Terraform Introduction
+# CLO835 - Assignment1 - Terraform Introduction
 #
 # Build EC2 Instances
 #
@@ -87,7 +87,7 @@ resource "aws_security_group" "my_sg" {
   }
   # Opening ports for application to access 
   ingress {
-    description = "Port For application"
+    description = "Application port"
     from_port   = 8081
     to_port     = 8081
     protocol    = "tcp"
@@ -95,7 +95,7 @@ resource "aws_security_group" "my_sg" {
   }
 
   ingress {
-    description = "Port For application"
+    description = "Application port"
     from_port   = 8082
     to_port     = 8082
     protocol    = "tcp"
@@ -103,7 +103,7 @@ resource "aws_security_group" "my_sg" {
   }
 
   ingress {
-    description = "Port For application"
+    description = "Application port"
     from_port   = 8083
     to_port     = 8083
     protocol    = "tcp"
