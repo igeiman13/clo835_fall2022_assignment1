@@ -137,8 +137,8 @@ resource "aws_eip" "static_eip" {
   )
 }
 # Creating ecr repositories
-resource "aws_ecr_repository" "app" {
-  name                 = "webapp_ecr"
+resource "aws_ecr_repository" "my_app" {
+  name                 = "webapp_repo"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -146,8 +146,8 @@ resource "aws_ecr_repository" "app" {
   }
 }
 
-resource "aws_ecr_repository" "sql" {
-  name                 = "mysql_ecr"
+resource "aws_ecr_repository" "my_sql" {
+  name                 = "mysql_repo"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
