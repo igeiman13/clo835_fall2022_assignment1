@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: mysql
-    image: 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
+    image: 837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.0
     env:
     - name: MYSQL_ROOT_PASSWORD
       value: pw
