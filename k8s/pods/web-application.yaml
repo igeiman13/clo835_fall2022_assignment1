@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-application
+spec:
+  containers:
+  - name: web-application
+    image: 837853736685.dkr.ecr.us-east-1.amazonaws.com/app:1.0
+    ports:
+    - containerPort: 8080
