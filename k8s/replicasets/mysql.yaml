@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: web-application
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: employees
+  template:
+    metadata:
+      labels:
+        app: employees
+    spec:
+      containers:
+      - name: web-application
+        image: 837853736685.dkr.ecr.us-east-1.amazonaws.com/mysql:1.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: pw
+        ports:
+        - containerPort: 3306
