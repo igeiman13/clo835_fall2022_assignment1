@@ -2,4 +2,4 @@
 *.tfstate
 terraform_code/dev/instances/assignment-dev
 *.pub
-terraform_code/dev/instances/assignment-dev.pub
+terraform_code/dev/instances/*.pub
