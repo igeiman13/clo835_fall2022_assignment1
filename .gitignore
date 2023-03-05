@@ -3,3 +3,4 @@
 terraform_code/dev/instances/assignment-dev
 *.pub
 terraform_code/dev/instances/*.pub
+terraform_code/dev/instances/terraform.tfstate.backup
