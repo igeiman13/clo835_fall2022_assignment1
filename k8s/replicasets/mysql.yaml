@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: web-application
+  name: mysql
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: employees
+      app: mysql
   template:
     metadata:
       labels:
-        app: employees
+        app: mysql
     spec:
       containers:
       - name: web-application
