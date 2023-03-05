@@ -1,4 +1,5 @@
 *.terraform
 *.tfstate
-terraform_code/dev/instances/assignment1-dev
+terraform_code/dev/instances/assignment-dev
 *.pub
+terraform_code/dev/instances/assignment-dev.pub
