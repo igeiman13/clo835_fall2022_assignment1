@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-webapp
+  labels:
+    app.kubernetes.io/name: guestbook
+    app.kubernetes.io/component: my_webapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: guestbook
+      app.kubernetes.io/component: my_webapp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: guestbook
+        app.kubernetes.io/component: my_webapp
+    spec:
+      containers:
+        - name: my-webapp
+          image: 448870721230.dkr.ecr.us-east-1.amazonaws.com/webapp_repo
+          resource:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 80
