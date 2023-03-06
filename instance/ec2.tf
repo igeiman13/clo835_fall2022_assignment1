@@ -43,13 +43,33 @@ resource "aws_instance" "k8s" {
     project = "clo835"
   }
 
-  key_name                = "assignment"
+  key_name                = "assignment2"
   monitoring              = true
   disable_api_termination = false
   ebs_optimized           = true
 }
 
 resource "aws_key_pair" "k8s" {
-  key_name   = "assignment"
-  public_key = file("${path.module}/assignment.pub")
+  key_name   = "assignment2"
+  public_key = file("${path.module}/assignment2.pub")
 }
+
+# Creating ecr repositories
+resource "aws_ecr_repository" "my_app" {
+  name                 = "webapp_repo"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+resource "aws_ecr_repository" "my_sql" {
+  name                 = "mysql_repo"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
