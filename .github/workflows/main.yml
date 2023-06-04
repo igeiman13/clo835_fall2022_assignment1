@@ -28,8 +28,7 @@ jobs:
         ECR_REPOSITORY: chanchal-dev-ecr-repo
         APPLICATION_IMAGE_TAG: v2.1
       run: |
-        cd Chapter02/kubia/
-        ls -ltra
+        
         # Docker build and push application image
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:application-$APPLICATION_IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:application-$APPLICATION_IMAGE_TAG
