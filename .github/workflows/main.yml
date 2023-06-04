@@ -28,7 +28,8 @@ jobs:
         ECR_REPOSITORY: chanchal-dev-ecr-repo
         APPLICATION_IMAGE_TAG: v2.1
       run: |
-        
+        cd Chapter02/kubia/
+        ls -ltra
         # Docker build and push application image
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:application-$APPLICATION_IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:application-$APPLICATION_IMAGE_TAG
@@ -40,5 +41,5 @@ jobs:
         MYSQL_IMAGE_TAG: v5.6
       run: |
         # Docker build and push MySQL image
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:mysql-$MYSQL_IMAGE_TAG -f clo835_fall2022_assignment1/Dockerfile.mysql .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:mysql-$MYSQL_IMAGE_TAG -f path/to/Dockerfile.mysql .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:mysql-$MYSQL_IMAGE_TAG
