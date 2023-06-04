@@ -40,5 +40,5 @@ jobs:
         MYSQL_IMAGE_TAG: v5.6
       run: |
         # Docker build and push MySQL image
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:mysql-$MYSQL_IMAGE_TAG -f path/to/Dockerfile.mysql .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:mysql-$MYSQL_IMAGE_TAG -f clo835_Assignment1_Chanchal/Dockerfile.mysql .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:mysql-$MYSQL_IMAGE_TAG
