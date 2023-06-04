@@ -54,5 +54,6 @@ jobs:
         echo "Pause for 10 seconds to let container start"
         sleep 10
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        
     
         
