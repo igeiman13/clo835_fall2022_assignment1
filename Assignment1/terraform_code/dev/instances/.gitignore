@@ -1,0 +1,6 @@
+/.terraform
+.terraform_code
+/providers
+Assignment1/terraform_code/dev/instances/.terraform/modules/modules.json
+Assignment1/terraform_code/dev/instances/.terraform/providers/registry.terraform.io/hashicorp/aws/3.74.0/linux_amd64/terraform-provider-aws_v3.74.0_x5
+
