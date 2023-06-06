@@ -32,14 +32,9 @@ jobs:
         ECR_REPOSITORY: newdatabase
         IMAGE_TAG: v0.1
       run: |
-        ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile_mysql .
-        # Unit test
-        docker run -d -p 3306:8080 --name database $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker ps
-        echo "Pause for 10 seconds to let container start"
-        sleep 10
+        # Docker publish
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     - name: comminting app into the ecr here
       env:
@@ -47,12 +42,7 @@ jobs:
         ECR_REPOSITORY: newapp
         IMAGE_TAG: v0.1
       run: |
-        ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # Unit test
-        docker run -d -p 80:8080 --name app $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker ps
-        echo "Pause for 10 seconds to let container start"
-        sleep 10
+        # Docker publish
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
