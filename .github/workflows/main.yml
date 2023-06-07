@@ -55,5 +55,6 @@ jobs:
         sleep 10
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
+        
     
         
