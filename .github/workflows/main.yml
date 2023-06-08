@@ -10,10 +10,8 @@ jobs:
     
     name: Build Image
     runs-on: ubuntu-latest
-
-   
     steps:
-
+  
     - name: Check out code
       uses: actions/checkout@v2
     - name: Login to Amazon ECR
@@ -24,7 +22,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         AWS_REGION: us-east-1
-    - name: Initiating database code push to ECR
+    - name: Initiating database code push to ECR  
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: newdatabase
@@ -39,6 +37,7 @@ jobs:
         echo "Pause for 10 seconds to let container start"
         sleep 10
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG    
+        
     - name: Pushing application repo to ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
