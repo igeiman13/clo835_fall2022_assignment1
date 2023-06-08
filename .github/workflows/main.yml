@@ -7,7 +7,7 @@ on:
 jobs:
   
   build:
-    
+     
     name: Build Image
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         AWS_REGION: us-east-1
-    - name: Initiating database code push to ECR  
+    - name: Initiating database code push to ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: newdatabase
