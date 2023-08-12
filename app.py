@@ -14,7 +14,7 @@ DBPWD = os.environ.get("DBPWD") or "passwors"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
-
+IMAGE_URL = os.environ.get("IMAGE_URL") or "" 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
     host= DBHOST,
@@ -56,7 +56,7 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR], photo=['http://3.95.242.131:8080/download/Casper.jpg'])
+    return render_template('addemp.html', color=color_codes[COLOR], photo=[ IMAGE_URL ])
     
 @app.route("/download/<filename>", methods=['GET'])
 def download(filename):
@@ -66,7 +66,7 @@ def download(filename):
         
 @app.route("/about", methods=['GET','POST'])
 def about():
-    return render_template('about.html', color=color_codes[COLOR])
+    return render_template('about.html', color=color_codes[COLOR], , photo=[ IMAGE_URL ])
     
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
@@ -94,7 +94,7 @@ def AddEmp():
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    return render_template("getemp.html", color=color_codes[COLOR])
+    return render_template("getemp.html", color=color_codes[COLOR], , photo=[ IMAGE_URL ])
 
 
 @app.route("/fetchdata", methods=['GET','POST'])
@@ -123,7 +123,7 @@ def FetchData():
         cursor.close()
 
     return render_template("getempoutput.html", id=output["emp_id"], fname=output["first_name"],
-                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], color=color_codes[COLOR])
+                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], color=color_codes[COLOR], , photo=[ IMAGE_URL ])
 
 if __name__ == '__main__':
     
