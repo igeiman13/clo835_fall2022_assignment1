@@ -14,7 +14,7 @@ DBPWD = os.environ.get("DBPWD") or "passwors"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
-
+IMAGE_URL = os.environ.get("IMAGE_URL") or "" 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
     host= DBHOST,
@@ -56,7 +56,7 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR], photo=['http://3.95.242.131:8080/download/Casper.jpg'])
+    return render_template('addemp.html', color=color_codes[COLOR], photo=[ IMAGE_URL ])
     
 @app.route("/download/<filename>", methods=['GET'])
 def download(filename):
