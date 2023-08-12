@@ -56,7 +56,7 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR], photo=['http://3.81.121.74:8080/download/Casper.jpg'])
+    return render_template('addemp.html', color=color_codes[COLOR], photo=['http://http://3.95.242.131:8080/download/Casper.jpg'])
     
 @app.route("/download/<filename>", methods=['GET'])
 def download(filename):
