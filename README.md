@@ -2,7 +2,7 @@
 
 sudo apt-get update -y
 sudo apt-get install mysql-client -y
-
+ 
 # Running application locally
 pip3 install -r requirements.txt
 sudo python3 app.py
@@ -16,7 +16,7 @@ sudo python3 app.py
 ### Running mysql
 ```docker run -d -e MYSQL_ROOT_PASSWORD=pw  my_db```
 
-
+ 
 ### Get the IP of the database and export it as DBHOST variable
 ```docker inspect <container_id>```
 

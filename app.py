@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 from pymysql import connections
 import os
 import random
 import argparse
-
+import boto3
+BUCKET = "group10-s3bucket"
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ DBPWD = os.environ.get("DBPWD") or "passwors"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
-
+IMAGE_URL = os.environ.get("IMAGE_URL") or "" 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
     host= DBHOST,
@@ -36,7 +37,15 @@ color_codes = {
     "darkblue": "#130f40",
     "lime": "#C1FF9C",
 }
+def download_file(file_name, bucket):
+    """
+    Function to download a given file from an S3 bucket
+    """
+    s3 = boto3.resource('s3')
+    output = f"Casper.jpg"
+    s3.Bucket(bucket).download_file(file_name, output)
 
+    return output
 
 # Create a string of supported colors
 SUPPORTED_COLORS = ",".join(color_codes.keys())
@@ -47,11 +56,17 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR])
-
+    return render_template('addemp.html', color=color_codes[COLOR], IMAGE_URL= IMAGE_URL )
+    
+@app.route("/download/<filename>", methods=['GET'])
+def download(filename):
+    if request.method == 'GET':
+        output = download_file(filename, BUCKET)
+        return send_file(output, as_attachment=True)
+        
 @app.route("/about", methods=['GET','POST'])
 def about():
-    return render_template('about.html', color=color_codes[COLOR])
+    return render_template('about.html', color=color_codes[COLOR], IMAGE_URL=[ IMAGE_URL ])
     
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
@@ -75,11 +90,11 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('addempoutput.html', name=emp_name, color=color_codes[COLOR])
+    return render_template('addempoutput.html', name=emp_name, color=color_codes[COLOR], IMAGE_URL=[ IMAGE_URL ])
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    return render_template("getemp.html", color=color_codes[COLOR])
+    return render_template("getemp.html", color=color_codes[COLOR], IMAGE_URL=[ IMAGE_URL ])
 
 
 @app.route("/fetchdata", methods=['GET','POST'])
@@ -108,7 +123,7 @@ def FetchData():
         cursor.close()
 
     return render_template("getempoutput.html", id=output["emp_id"], fname=output["first_name"],
-                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], color=color_codes[COLOR])
+                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], color=color_codes[COLOR], IMAGE_URL=[ IMAGE_URL ])
 
 if __name__ == '__main__':
     
