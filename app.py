@@ -4,7 +4,7 @@ import os
 import random
 import argparse
 import boto3
-BUCKET = "group10-s3bucket-aparna"
+BUCKET = "group10-s3bucket"
 
 app = Flask(__name__)
 
