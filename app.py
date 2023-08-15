@@ -56,7 +56,7 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR], IMAGE_URL= IMAGE_URL )
+    return render_template('addemp.html', color=color_codes[COLOR], IMAGE_URL=IMAGE_URL)
     
 @app.route("/download/<filename>", methods=['GET'])
 def download(filename):
@@ -94,7 +94,7 @@ def AddEmp():
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    return render_template("getemp.html", color=color_codes[COLOR], IMAGE_URL=[ IMAGE_URL ])
+    return render_template("getemp.html", color=color_codes[COLOR], IMAGE_URL=IMAGE_URL)
 
 
 @app.route("/fetchdata", methods=['GET','POST'])
@@ -148,4 +148,4 @@ if __name__ == '__main__':
         print("Color not supported. Received '" + COLOR + "' expected one of " + SUPPORTED_COLORS)
         exit(1)
 
-    app.run(host='0.0.0.0',port=8080,debug=True)
+    app.run(host='0.0.0.0',port=81,debug=True)
