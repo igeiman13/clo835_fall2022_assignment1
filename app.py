@@ -94,7 +94,7 @@ def AddEmp():
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    return render_template("getemp.html", color=color_codes[COLOR], IMAGE_URL=[ IMAGE_URL ])
+    return render_template("getemp.html", color=color_codes[COLOR], IMAGE_URL=IMAGE_URL)
 
 
 @app.route("/fetchdata", methods=['GET','POST'])
