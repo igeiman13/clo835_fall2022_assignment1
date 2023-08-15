@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 from pymysql import connections
 import os
 import random
 import argparse
+import boto3
+
+BUCKET = "final-group11-bucket"
 
 
 app = Flask(__name__)
@@ -10,6 +13,8 @@ app = Flask(__name__)
 DBHOST = os.environ.get("DBHOST") or "localhost"
 DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "passwors"
+BACKGROUND_IMAGE_URL = os.environ.get("BACKGROUND_IMAGE_URL") or "http://18.212.160.21:8080/download/ilovecats.jpg"
+YOUR_NAME = os.environ.get("YOUR_NAME") or "Group 11"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
@@ -44,15 +49,32 @@ SUPPORTED_COLORS = ",".join(color_codes.keys())
 # Generate a random color
 COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lime"])
 
+def download_file(file_name, bucket):
+    """
+    Function to download a given file from an S3 bucket
+    """
+    s3 = boto3.resource('s3')
+    output = f"ilovecats.jpg"
+    s3.Bucket(bucket).download_file(file_name, output)
+
+    return output
+
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR])
+    print("BACKGROUND_IMAGE_URL:", BACKGROUND_IMAGE_URL)
+    return render_template('addemp.html', color=color_codes[COLOR], teamname=YOUR_NAME, image=BACKGROUND_IMAGE_URL)
+
+@app.route("/download/<filename>", methods=['GET'])
+def download(filename):
+    if request.method == 'GET':
+        output = download_file(filename, BUCKET)
+        return send_file(output, as_attachment=True)
 
 @app.route("/about", methods=['GET','POST'])
 def about():
     return render_template('about.html', color=color_codes[COLOR])
-    
+
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['emp_id']
@@ -133,4 +155,4 @@ if __name__ == '__main__':
         print("Color not supported. Received '" + COLOR + "' expected one of " + SUPPORTED_COLORS)
         exit(1)
 
-    app.run(host='0.0.0.0',port=8080,debug=True)
+    app.run(host='0.0.0.0',port=81,debug=True)
