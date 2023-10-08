@@ -1,41 +1,32 @@
-# Install the required MySQL package
+# Assignment 1 CLO 835
 
-sudo apt-get update -y
-sudo apt-get install mysql-client -y
+# 1. Login in to the ec2 instance
+```ssh -i <ssh-key> <eip>```
 
-# Running application locally
-pip3 install -r requirements.txt
-sudo python3 app.py
-# Building and running 2 tier web application locally
-### Building mysql docker image 
-```docker build -t my_db -f Dockerfile_mysql . ```
+# 2. Install docker and update the images
+```sudo yum update -y``` 
 
-### Building application docker image 
-```docker build -t my_app -f Dockerfile . ```
+```sudo yum install docker -y```
 
-### Running mysql
-```docker run -d -e MYSQL_ROOT_PASSWORD=pw  my_db```
+```sudo systemctl start docker``` 
 
+```sudo systemctl status docker```
 
-### Get the IP of the database and export it as DBHOST variable
-```docker inspect <container_id>```
+# 3. Update the aws credentials 
 
+```vi ~/.aws/credentials```
 
-### Example when running DB runs as a docker container and app is running locally
-```
-export DBHOST=127.0.0.1
-export DBPORT=3307
-```
-### Example when running DB runs as a docker container and app is running locally
-```
-export DBHOST=172.17.0.2
-export DBPORT=3306
-```
-```
-export DBUSER=root
-export DATABASE=employees
-export DBPWD=pw
-export APP_COLOR=blue
-```
-### Run the application, make sure it is visible in the browser
-```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD  my_app```
+# 4. Export the ECR and login
+
+```export ECR = <ecr uri>```
+```aws ecr get-login-password --region us-east-1 | docker login -u AWS ${ECR} --password-stdin```
+
+# 5. Pull the image
+
+``` docker pull <image-uri>```
+
+# 6. Now create the containers.
+
+```docker run -d -e MYSQL_ROOT_PASSWORD=db_pass123 --name mysql-db <image-id>```
+```docker run -d -e DBHOST=mysql-db -e DBPORT=3306 -e DBPWD=db_pass123 -e APP_COLOR=blue -p 81:8080 --name webapp1 --link mysql-db:mysql-db```
+### Thank You !
