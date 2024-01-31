@@ -16,16 +16,9 @@ sudo python3 app.py
 ### Running mysql
 ```docker run -d -e MYSQL_ROOT_PASSWORD=pw  my_db```
 
-
 ### Get the IP of the database and export it as DBHOST variable
 ```docker inspect <container_id>```
 
-
-### Example when running DB runs as a docker container and app is running locally
-```
-export DBHOST=127.0.0.1
-export DBPORT=3307
-```
 ### Example when running DB runs as a docker container and app is running locally
 ```
 export DBHOST=172.17.0.2
@@ -38,4 +31,4 @@ export DBPWD=pw
 export APP_COLOR=blue
 ```
 ### Run the application, make sure it is visible in the browser
-```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD  my_app```
+```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e DATABASE=$DATABASEs -e APP_COLOR=$APP_COLOR  my_app```
