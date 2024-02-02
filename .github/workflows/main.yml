@@ -42,7 +42,7 @@ jobs:
         ECR_REPOSITORY: web_app
         IMAGE_TAG: v1.0
       run: |
-        cd docker/
+        cd dockerbuild_build/
         ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
