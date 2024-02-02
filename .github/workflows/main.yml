@@ -36,7 +36,7 @@ jobs:
         ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:my_app
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:web_app
         # Unit test
         docker run -d -p 8080:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker ps
@@ -44,7 +44,7 @@ jobs:
         sleep 10
         # curl localhost:8080 -vvv
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:my_app
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:web_app
 
   build_db:
 
@@ -77,6 +77,6 @@ jobs:
         ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile_mysql .
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:my_db
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:db
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:my_db
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:db
