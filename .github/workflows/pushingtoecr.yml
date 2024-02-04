@@ -31,7 +31,7 @@ jobs:
         ECR_REPOSITORY_APP: assignment1_ecr
         ECR_REPOSITORY_DB: assignment1_db
         IMAGE_TAG_APP: v0.1
-        IMAGE_TAG_DB: v0.1
+        IMAGE_TAG_DB: v0.2
       run: |
         ls -ltra
         
